@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Table to Row</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+</head>
+<body>
+<textarea id="input" placeholder="input"></textarea>
+<p><button id="activate">Activate</button></p>
+<textarea id="output" placeholder="output"></textarea>
+
+<script>
+document.querySelector('#activate').addEventListener('click', () => {
+    const input = document.querySelector('#input').value
+    const output = document.querySelector('#output')
+    const rows = input.split('\n')
+    const headers = rows[0].split('\t')
+    const colnames = []
+    const colvals = []
+    rows.slice(1).forEach((row, rowidx) => {
+        const cells = row.split('\t')
+        cells.splice(1).forEach((cell, colidx) => {
+            const name = (
+                cells[0].replace(':', '')
+                +' '+
+                headers[colidx+1]
+            ).trim()
+            colnames.push(name)
+            colvals.push(cell)
+        })
+    });
+    output.value = colnames.join('\t') + '\n' + colvals.join('\t')
+    console.log(input)
+    console.log(output)
+})
+</script>
+</body>
+</html>
